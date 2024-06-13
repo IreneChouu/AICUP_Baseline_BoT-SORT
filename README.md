@@ -318,58 +318,7 @@ bash tools/track_all_timestamps.sh --weights "pretrained/yolov7-e6e.pt" --source
 
 The submission file and visualized images will be saved by default at `runs/detect/<timestamp>`.
 
-## Evaluation format
 
-The evaluation format is the same as [py-motmetrics](https://github.com/cheind/py-motmetrics).
-
-> [!CAUTION]
-> **The images resolution for evaluation is `1280 * 720`**
-
-frame_id| track_id | bb_left|  bb_top | bb_width |bb_height|conf|3d_x|3d_y|3d_z|
---------| -------- | -------| --------| ---------|-------- |----|----|----|----|
-1       |1         |843     |742      | 30       |30       |0.8 |-1  |-1  |-1  |
-
-## Evaluate your submission
-
-Before evaluation, you need to run `tools/datasets/AICUP_to_MOT15.py` to convert ground truth into submission format:
-
-```bash
-cd <BoT-SORT_dir>
-python tools/datasets/AICUP_to_MOT15.py --AICUP_dir "your AICUP dataset path" --MOT15_dir "converted dataset directory" --imgsz "img size, (height, width)"
-```
-
-You can use `tools/evaluate.py` to evaluate your submission by the following command:
-
-```bash
-cd <BoT-SORT_dir>
-python tools/evaluate.py --gt_dir "Path to the ground truth directory" --ts_dir "Path to the tracking result directory"
-```
-
-The `gt_dir` and `ts_dir` file trees are as follows:
-
-```python
-├── gt_dir
-│   ├── 0902_150000_151900.txt
-│   ├── 0902_190000_191900.txt
-│   ├── ...
-├── ts_dir
-│   ├── 0902_150000_151900.txt
-│   ├── 0902_190000_191900.txt
-│   ├── ...
-```
-
-Then you can get the result:
-![](demo_readme/eval_res.png)
-
-## Note
-
-Our camera motion compensation module is based on the OpenCV contrib C++ version of VideoStab Global Motion Estimation, 
-which currently does not have a Python version. <br>
-Motion files can be generated using the C++ project called 'VideoCameraCorrection' in the GMC folder. <br> 
-The generated files can be used from the tracker. <br>
-
-In addition, python-based motion estimation techniques are available and can be chosen by passing <br> 
-'--cmc-method' <files | orb | ecc> to demo.py or track.py. 
 
 ## Citation
 
